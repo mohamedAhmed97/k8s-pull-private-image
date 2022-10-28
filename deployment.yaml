@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: private-repo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: privateRepo
+  template:
+    metadata:
+      labels:
+        app: privateRepo
+    spec:
+      imagePullSecrets:
+        - name: aws-secret
+      containers:
+        - name: aws-node-app
+          image: 032703785531.dkr.ecr.us-west-2.amazonaws.com/node-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
